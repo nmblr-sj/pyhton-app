@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   repository: amihanglobal/python-app
   pullPolicy: IfNotPresent
-  tag: 7cd682
+  tag: 9a088b
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
