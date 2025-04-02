@@ -30,11 +30,28 @@ jobs:
         with:
           push: true
           tags: amihanglobal/python-app:${{ env.COMMIT_ID }}
+    outputs:
+      commit_id: ${{ env.COMMIT_ID }}
       
   cd:
     needs: ci
     runs-on: self-hosted
     steps:
+
+      - uses: action/checkout@v3
+
+      - name: Modify values file
+        shell: bash
+        run: |
+          echo ${{needs.ci.outputs.commit_id}}
+          pip install yq
+          yq -Yi '.image.tag =  "${{needs.ci.outputs.commit_id}}"'  charts/python-app/values.yaml
+
+      - name: commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'Updates values.yaml with commit ${{needs.ci.outputs.commit_id}}' 
+
       - name: Install ArgoCD
         shell: bash
         run: |
@@ -50,8 +67,6 @@ jobs:
           --grpc-web \
           --username admin \
           --password ${{ secrets.ARGOCD_PASSWORD }}
-
-          argocd app set python-app -p image.tag=${{ env.COMMIT_ID }}
           
           argocd app sync python-app
 
