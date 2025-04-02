@@ -56,5 +56,5 @@ brew install argocd
 
 argocd login <ARGOCD_SERVER>
 
-argocd login https://argocd.test.com
+argocd login argocd.test.com --insecure --grpc-web --username admin --password azRYKSXst0nheW4B
 
