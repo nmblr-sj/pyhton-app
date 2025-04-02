@@ -49,3 +49,12 @@ helm upgrade --install --namespace actions-runner-system --create-namespace\
   --wait actions-runner-controller actions-runner-controller/actions-runner-controller
 
 kubectl apply -f runnerdeployment.yaml -n actions-runner-system
+
+# ARGO cli install / setup
+
+brew install argocd
+
+argocd login <ARGOCD_SERVER>
+
+argocd login https://argocd.test.com
+
