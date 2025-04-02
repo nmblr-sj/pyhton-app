@@ -31,4 +31,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: amihanglobal/python-app:${{ env.COMMIT_SHORT_SHA }}
+          tags: amihanglobal/python-app:${{ steps.short-sha.outputs.sha }}
