@@ -11,12 +11,11 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Set short git commit SHA
-        id: vars
+      - name: Shorten commit id
+        shell: bash
         run: |
-          calculatedSha=$(git rev-parse --short ${{ github.sha }})
-          echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
-
+          echo "COMMIT_ID=${GITHUB_SHA::6}" >> "$GITHUB_ENV"
+          
       - name: Confirm git commit SHA output
         run: echo ${{ env.COMMIT_SHORT_SHA }}
 
@@ -31,4 +30,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: amihanglobal/python-app:${{ steps.short-sha.outputs.sha }}
+          tags: amihanglobal/python-app:${{ env.COMMIT_ID }}
