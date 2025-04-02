@@ -51,4 +51,7 @@ jobs:
           --username admin \
           --password ${{ secrets.ARGOCD_PASSWORD }}
 
+          argocd app set python-app -p image.tag=${{ env.COMMIT_ID }}
+          
           argocd app sync python-app
+
